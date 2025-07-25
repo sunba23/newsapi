@@ -1,0 +1,44 @@
+name: format
+
+on:
+  push:
+    paths:
+      - '**.py'
+      - '**.go'
+  pull_request:
+    paths:
+      - '**.py'
+      - '**.go'
+
+jobs:
+  formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install black
+        run: pip install black
+
+      - name: Run black
+        run: black --check .
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Run go fmt
+        run: |
+          fmt_output=$(gofmt -l .)
+          if [ -n "$fmt_output" ]; then
+            echo "The following Go files are not formatted:"
+            echo "$fmt_output"
+            exit 1
+          fi

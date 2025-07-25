@@ -1,0 +1,12 @@
+[project]
+name = "core"
+version = "0.1.0"
+description = "Service for periodically fetching, tagging and then saving news to database."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "newsapi-python>=0.2.7",
+    "psycopg>=3.2.9",
+    "python-dateutil>=2.9.0.post0",
+    "python-dotenv>=1.1.0",
+]
